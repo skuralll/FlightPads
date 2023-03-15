@@ -61,6 +61,7 @@ enum class LaunchPadType(private val dataFormat: String, private val dataSize: I
         val meta = elytra.itemMeta
         meta?.addEnchant(Enchantment.VANISHING_CURSE, 1, true)
         meta?.addEnchant(Enchantment.BINDING_CURSE, 1, true)
+        meta?.isUnbreakable = true
         elytra.itemMeta = meta
 
         player.inventory.chestplate = elytra
