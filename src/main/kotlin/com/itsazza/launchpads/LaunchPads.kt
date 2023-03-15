@@ -1,7 +1,9 @@
 package com.itsazza.launchpads
 
+import com.itsazza.launchpads.cache.ArmorCache
 import com.itsazza.launchpads.command.LaunchPadsCommand
 import com.itsazza.launchpads.events.OnPlayerTakeDamage
+import com.itsazza.launchpads.events.OnQuit
 import com.itsazza.launchpads.events.OnSignPlace
 import com.itsazza.launchpads.events.OnStep
 import com.itsazza.launchpads.pads.LaunchPadStorage
@@ -22,10 +24,20 @@ class LaunchPads : JavaPlugin() {
         Bukkit.getServer().pluginManager.registerEvents(OnSignPlace(), this)
         Bukkit.getServer().pluginManager.registerEvents(OnStep(), this)
         Bukkit.getServer().pluginManager.registerEvents(OnPlayerTakeDamage(), this)
+        Bukkit.getServer().pluginManager.registerEvents(OnQuit(), this)
 
         // Load the saved launch pads
         LaunchPadStorage.load()
         Metrics(this, 10774)
+    }
+
+    override fun onDisable() {
+        // recover all player's armor
+        ArmorCache.getAll().map {(uuid, item) ->
+            val player = Bukkit.getPlayer(uuid) ?: return@map
+            player.inventory.chestplate = item
+            ArmorCache.pop(uuid)
+        }
     }
 
     fun reload() {

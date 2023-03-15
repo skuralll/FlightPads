@@ -1,8 +1,11 @@
 package com.itsazza.launchpads.pads
 
 import com.itsazza.launchpads.LaunchPads
+import com.itsazza.launchpads.cache.ArmorCache
 import com.itsazza.launchpads.cache.LaunchCache
 import de.tr7zw.changeme.nbtapi.NBT
+import net.md_5.bungee.api.ChatMessageType
+import net.md_5.bungee.api.chat.TextComponent
 import org.bukkit.GameMode
 import org.bukkit.Material
 import org.bukkit.enchantments.Enchantment
@@ -71,18 +74,27 @@ enum class LaunchPadType(private val dataFormat: String, private val dataSize: I
         }
 
         // equip elytra
-        val oldArmor = player.inventory.chestplate
+        player.inventory.chestplate?.let { ArmorCache.put(player.uniqueId, it) } // cache old armor
         player.inventory.chestplate = elytra
+        sendActionBar(player, "§bEquipped Elytra!")
+
 
         // check landing and recover old armor
         val entityPlayer = player as LivingEntity
         object : BukkitRunnable() {
             override fun run() {
-                if (entityPlayer.isOnGround || entityPlayer.isDead || player.isFlying){
-                    player.inventory.chestplate = oldArmor
+                if (entityPlayer.isOnGround || !player.isOnline || entityPlayer.isDead || player.isFlying){
+                    player.inventory.chestplate = ArmorCache.pop(player.uniqueId) // recover from cache
+                    sendActionBar(player, "§cRemoved Elytra.")
                     cancel()
                 }
             }
         }.runTaskTimer(LaunchPads.instance, 5L, 1L)
+    }
+
+    private fun sendActionBar(player: Player, message:String){
+        val component = TextComponent();
+        component.text = message
+        player.spigot().sendMessage(ChatMessageType.ACTION_BAR, component)
     }
 }
