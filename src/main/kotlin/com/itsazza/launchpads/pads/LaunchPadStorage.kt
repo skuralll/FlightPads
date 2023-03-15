@@ -41,7 +41,7 @@ object LaunchPadStorage {
                     val created = effectType.create(data)
                     if (created == null) {
                         Bukkit.getLogger().warning(
-                            "Failed to create effect \"$effectKey\" for launchpad $key. This type needs the following values in config: ${
+                            "Failed to create effect \"$effectKey\" for flightpad $key. This type needs the following values in config: ${
                                 effectType.dataPoints.map { "${it.key} (${it.value.toString().lowercase()})" }.joinToString(", ") }"
                         )
                         continue
@@ -53,7 +53,7 @@ object LaunchPadStorage {
             }
         }.also {
             Bukkit.getLogger()
-                .info("[LaunchPads] Loaded ${launchPads.size} LaunchPad ${if (launchPads.size > 1) "types" else "type"} in $it ms.")
+                .info("[FlightPads] Loaded ${launchPads.size} FlightPad ${if (launchPads.size > 1) "types" else "type"} in $it ms.")
         }
     }
 
