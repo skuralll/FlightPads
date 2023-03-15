@@ -1,5 +1,5 @@
 name: FlightPads
-version: 1.0
+version: 1.1
 main: com.itsazza.launchpads.LaunchPads
 api-version: 1.13
 authors: [ ItsAZZA, skuralll ]

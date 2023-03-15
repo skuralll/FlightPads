@@ -42,11 +42,17 @@ enum class LaunchPadType(private val dataFormat: String, private val dataSize: I
     }
 
     private fun setVelocity(player: Player, velocity: Vector) {
+        val _velocity = velocity.copy(velocity)
         object : BukkitRunnable() {
             override fun run() {
-                player.velocity = velocity
+                _velocity.multiply(1 - 0.02)
+                _velocity.y -= 0.08
+                player.velocity = _velocity
+                if (_velocity.y <= 0 || !player.isOnline || player.isFlying || player.isGliding) {
+                    cancel()
+                }
             }
-        }.runTaskLater(instance, 1L)
+        }.runTaskTimer(instance, 1L, 1L)
 
         if (instance.config.getBoolean("falldamage.prevent") && player.gameMode != GameMode.CREATIVE) {
             LaunchCache.put(
