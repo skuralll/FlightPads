@@ -18,7 +18,7 @@ class LaunchPads : JavaPlugin() {
     override fun onEnable() {
         this.saveDefaultConfig()
         instance = this
-        getCommand("launchpads")?.setExecutor(LaunchPadsCommand)
+        getCommand("flightpads")?.setExecutor(LaunchPadsCommand)
         Bukkit.getServer().pluginManager.registerEvents(OnSignPlace(), this)
         Bukkit.getServer().pluginManager.registerEvents(OnStep(), this)
         Bukkit.getServer().pluginManager.registerEvents(OnPlayerTakeDamage(), this)

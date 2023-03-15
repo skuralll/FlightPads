@@ -22,12 +22,12 @@ class OnStep : Listener {
         val dataBlock = block.getRelative(0, signLocation, 0)
         if (dataBlock.state !is Sign) return
         val sign = dataBlock.state as Sign
-        if (!sign.getLine(0).equals("[launch]", true)) return
+        if (!sign.getLine(0).equals("[flight]", true)) return
 
         val player = event.player
         val launchPad = LaunchPadStorage.get(sign.getLine(1))
         if (launchPad == null) {
-            player.sendMessage("§cCouldn't find launch pad with name \"${sign.getLine(1)}\"")
+            player.sendMessage("§cCouldn't find flight pad with name \"${sign.getLine(1)}\"")
             return
         }
 

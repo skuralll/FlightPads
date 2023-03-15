@@ -12,8 +12,8 @@ object LaunchPadsCommand : CommandExecutor {
 
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<String>): Boolean {
         if (sender !is Player) return false
-        if (!sender.hasPermission("launchpads.reload")) {
-            sender.sendMessage("§cNo permission: launchpads.reload")
+        if (!sender.hasPermission("flightpads.reload")) {
+            sender.sendMessage("§cNo permission: flightpads.reload")
             return false
         }
         if (args.isEmpty()) {
@@ -37,7 +37,7 @@ object LaunchPadsCommand : CommandExecutor {
         player.sendMessage(
             """
             §ePossible subcommands:
-            §f- /launchpads reload : Reload the config
+            §f- /flightpads reload : Reload the config
         """.trimIndent()
         )
     }

@@ -8,9 +8,9 @@ class OnSignPlace : Listener {
     @EventHandler
     fun onSignEdit(event: SignChangeEvent) {
         val string = event.getLine(0) ?: return
-        if (!string.equals("[launch]", true)) return
-        if (event.player.hasPermission("launchpads.create")) return
-        event.player.sendMessage("§cYou don't have a permission to create launch pads!")
+        if (!string.equals("[flight]", true)) return
+        if (event.player.hasPermission("flightpads.create")) return
+        event.player.sendMessage("§cYou don't have a permission to create flight pads!")
         event.isCancelled = true
     }
 }
