@@ -1,12 +1,12 @@
-name: LaunchPads
-version: 2.1.0
+name: FlightPads
+version: 1.0
 main: com.itsazza.launchpads.LaunchPads
 api-version: 1.13
-authors: [ ItsAZZA ]
-website: https://bcsn.us
+authors: [ ItsAZZA, skuralll ]
+website: https://skuralll.com/
 softdepend: [ Kotlin ]
 libraries:
   - 'org.jetbrains.kotlin:kotlin-stdlib:1.6.0'
 commands:
-  launchpads:
-    aliases: ["launchpad"]
+  flightpads:
+    aliases: ["flightpad"]

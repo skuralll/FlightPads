@@ -3,8 +3,7 @@ plugins {
     id "com.github.johnrengelman.shadow" version "7.1.2"
 }
 
-group = 'com.itsazza'
-version = '2.1.0'
+group = 'com.skuralll'
 
 repositories {
     mavenCentral()
@@ -20,6 +19,6 @@ dependencies {
 
 shadowJar {
     relocate('org.bstats', 'com.itsazza.resources.bstats')
-    archiveName("LaunchPads.jar")
+    archiveName("FlightPads.jar")
     minimize()
 }
