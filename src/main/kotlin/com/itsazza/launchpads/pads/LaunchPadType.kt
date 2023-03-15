@@ -6,6 +6,7 @@ import de.tr7zw.changeme.nbtapi.NBT
 import org.bukkit.GameMode
 import org.bukkit.Material
 import org.bukkit.enchantments.Enchantment
+import org.bukkit.entity.LivingEntity
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 import org.bukkit.scheduler.BukkitRunnable
@@ -57,7 +58,7 @@ enum class LaunchPadType(private val dataFormat: String, private val dataSize: I
         // check if player already has elytra
         if (player.inventory.chestplate?.type == Material.ELYTRA) return
 
-        // create customed elytra
+        // create customized elytra
         val elytra = ItemStack(Material.ELYTRA)
         val meta = elytra.itemMeta
         meta?.addEnchant(Enchantment.VANISHING_CURSE, 1, true)
@@ -69,6 +70,19 @@ enum class LaunchPadType(private val dataFormat: String, private val dataSize: I
             it.setBoolean("flightpad", true)
         }
 
+        // equip elytra
+        val oldArmor = player.inventory.chestplate
         player.inventory.chestplate = elytra
+
+        // check landing and recover old armor
+        val entityPlayer = player as LivingEntity
+        object : BukkitRunnable() {
+            override fun run() {
+                if (entityPlayer.isOnGround || entityPlayer.isDead || player.isFlying){
+                    player.inventory.chestplate = oldArmor
+                    cancel()
+                }
+            }
+        }.runTaskTimer(LaunchPads.instance, 5L, 1L)
     }
 }
