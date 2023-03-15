@@ -2,6 +2,7 @@ package com.itsazza.launchpads.pads
 
 import com.itsazza.launchpads.LaunchPads
 import com.itsazza.launchpads.cache.LaunchCache
+import de.tr7zw.changeme.nbtapi.NBT
 import org.bukkit.GameMode
 import org.bukkit.Material
 import org.bukkit.enchantments.Enchantment
@@ -32,7 +33,7 @@ enum class LaunchPadType(private val dataFormat: String, private val dataSize: I
 
         // launch player
         setVelocity(player, vector)
-        putOnElytra(player)
+        equipElytra(player)
         return true
     }
 
@@ -52,7 +53,7 @@ enum class LaunchPadType(private val dataFormat: String, private val dataSize: I
     }
 
     // Equip players with elytra
-    private fun putOnElytra(player: Player){
+    private fun equipElytra(player: Player){
         // check if player already has elytra
         if (player.inventory.chestplate?.type == Material.ELYTRA) return
 
@@ -63,6 +64,10 @@ enum class LaunchPadType(private val dataFormat: String, private val dataSize: I
         meta?.addEnchant(Enchantment.BINDING_CURSE, 1, true)
         meta?.isUnbreakable = true
         elytra.itemMeta = meta
+        // modify nbt
+        NBT.modify(elytra) { it ->
+            it.setBoolean("flightpad", true)
+        }
 
         player.inventory.chestplate = elytra
     }
